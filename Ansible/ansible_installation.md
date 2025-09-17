@@ -11,7 +11,7 @@ This is a guide for installing Ansible for configuration management, application
 
 Install Ansible on the Control Host
 
-    1. Log in to the Control Host server using ssh, cloud_user, and the provided Public IP address and password:
+1. Log in to the Control Host server using ssh, cloud_user, and the provided Public IP address and password:
 
 	```sh
     	ssh cloud_user@<PUBLIC IP>
@@ -23,13 +23,13 @@ Install Ansible on the Control Host
     	cat /etc/os-release
 	```
 
-    2. Install epel-release (Extra Packages for Enterprise Linux) and enter y when prompted:
+ 2. Install epel-release (Extra Packages for Enterprise Linux) and enter y when prompted:
 
 	```sh
     	sudo yum install epel-release
 	```
 
-    3. Install Ansible and enter y when prompted:
+ 3. Install Ansible and enter y when prompted:
 
 	```sh
     	sudo yum install ansible
