@@ -14,29 +14,25 @@ Install Ansible on the Control Host
 1. Log in to the Control Host server using ssh, cloud_user, and the provided Public IP address and password:
 
 	```sh
-    	ssh cloud_user@<PUBLIC IP>
+    ssh cloud_user@<PUBLIC IP>
 	```
 
     You may want to check Linux version by looking at the content of the /etc/os-release file:
 
 	```sh
-    	cat /etc/os-release
+    cat /etc/os-release
 	```
 
  2. Install epel-release (Extra Packages for Enterprise Linux) and enter y when prompted:
 
 	```sh
-    	sudo yum install epel-release
+    sudo yum install epel-release
 	```
 
  3. Install Ansible and enter y when prompted:
 
 	```sh
-    	sudo yum install ansible
-	```
-
-	```sh
-    	
+    sudo yum install ansible
 	```
 
 Important Notice
@@ -58,13 +54,13 @@ Now, we need to create the ansible user on both the control host and workstation
 1. On the control node:
 
 	```sh
-    	sudo useradd ansible
+    sudo useradd ansible
 	```
 
 2. Connect to the workstation node using the provided password:
 
 	```sh
-    	ssh workstation
+    ssh workstation
 	```
 
 
@@ -83,33 +79,32 @@ With our user created, we need to create a pre-shared key that allows the user t
 1. Change to the ansible user:
 
 	```sh
-    	sudo su - ansible
+    sudo su - ansible
 	```
 
 2. Generate a new SSH key, accepting the default settings when prompted:
 
 	```sh
-    	ssh-keygen
+    ssh-keygen
 	```
 
 3. Copy the SSH key to workstation, providing the password we created earlier:
 
 	```sh
-    	ssh-copy-id workstation
+    ssh-copy-id workstation
 	```
 
 4. Test that we no longer need a password to log in to the workstation:
 
 	```sh
-    	ssh workstation
+    ssh workstation
 	```
 
 5. Once we succeed at logging in, log out of workstation:
 
 	```sh
-    	logout
+    logout
 	```
-
 
 Configure the Ansible User on the Workstation Host
 
@@ -117,30 +112,30 @@ Our next job is to configure the ansible user on the workstation host so that th
 
 1. Log in to the workstation host as cloud_user using the password provided by the lab:
 
-    	```sh
-    	ssh cloud_user@workstation
+    ```sh
+    ssh cloud_user@workstation
 	```
 
 2. Edit the sudoers file:
 
 	```sh
-    	sudo visudo
+    sudo visudo
 	```
 
 3. Add this line at the end of the file:
 
-    	```sh
-    	ansible       ALL=(ALL)       NOPASSWD: ALL
+    ```sh
+    ansible       ALL=(ALL)       NOPASSWD: ALL
 	```
 
 4. Save the file:
 	```sh
-    	:wq
+    :wq
 	```
     
 5. Log out of workstation:
 	```sh
-    	logout
+    logout
 	```
     
 
@@ -153,13 +148,11 @@ Next, we need to create a simple inventory, /home/ansible/inventory, consisting 
 1. On the control host, as the ansible user, run the following commands:
 
 	```sh
-    	vim /home/ansible/inventory
+    vim /home/ansible/inventory
 	```
     
 
 2. Add the text "workstation" to the file and save using :wq in vim.
-
-
 
 
 Write an Ansible Playbook
@@ -168,7 +161,7 @@ We need to write an Ansible playbook into /home/ansible/git-setup.yml on the con
 
 1. On the control host, as the ansible user, create an Ansible playbook:
 	```sh
-    	vim /home/ansible/git-setup.yml
+    vim /home/ansible/git-setup.yml
 	```
     
 
@@ -184,27 +177,18 @@ We need to write an Ansible playbook into /home/ansible/git-setup.yml on the con
           state: latest
 	```
 
-    --- # install git on target host
-    - hosts: workstation
-      become: yes
-      tasks:
-      - name: install git
-        yum:
-          name: git
-          state: latest
-
 3. Save and exit the file (:wq in vim).
 
 4. Run the playbook:
 	```sh
-    	ansible-playbook -i /home/ansible/inventory /home/ansible/git-setup.yml
+    ansible-playbook -i /home/ansible/inventory /home/ansible/git-setup.yml
 	```
     
 5. Verify that the playbook ran successfully:
 	```sh
-    	ssh workstation
-    	which git
-    	```
+    ssh workstation
+    which git
+    ```
 
 
 Conclusion
